@@ -1,4 +1,4 @@
-Simple image resizing and optimisation service
+# Simple image resizing and optimisation service
 
 This service can be used to front any endpoint that serves images. It uses [Sharp](https://sharp.pixelplumbing.com/) for "High performance Node.js image processing" and [Fastify](https://fastify.dev/) for "Fast and low overhead web framework, for Node.js"
 
