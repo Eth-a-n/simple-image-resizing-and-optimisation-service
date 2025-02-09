@@ -1,0 +1,22 @@
+{
+  "name": "image-resize-and-optimise-service",
+  "version": "1.0.0",
+  "description": "Image resizing and optimisation service",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "fastify": "5.2.1",
+    "sharp": "^0.33.5"
+  },
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "node-fetch": "3.3.2"
+  }
+}
