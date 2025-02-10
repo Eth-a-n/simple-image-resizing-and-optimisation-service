@@ -7,15 +7,14 @@ const sharp = require('sharp');
 
 fastify.get('/image', async (req, res) => {
   const { width = 1000, quality = 100, path } = req.query;
-  const basePath = process.env.BASE_PATH
+  const basePath = process.env.BASE_PATH || '';
   const imagePath = `${basePath}${path}`;
   const acceptHeader = req.headers.accept || '';
   let imageFormat = 'image/jpeg';
 
   if (acceptHeader.includes('image/avif')) {
     imageFormat = 'image/avif';
-  }
-  else if (acceptHeader.includes('image/webp')) {
+  } else if (acceptHeader.includes('image/webp')) {
     imageFormat = 'image/webp';
   } else if (acceptHeader.includes('image/png')) {
     imageFormat = 'image/png';
@@ -30,7 +29,6 @@ fastify.get('/image', async (req, res) => {
 
       return Buffer.from(temp)
     });
-
     let processedImage = await sharp(imageBuffer)
       .resize(Number(width))
       .toFormat(imageFormat.split('/')[1], { quality: Number(quality) })
@@ -46,7 +44,6 @@ fastify.get('/image', async (req, res) => {
     res.send(processedImage);
 
     processedImage = null;
-
   } catch (error) {
     console.error('Error processing image:', error);
     res.status(500).send('Error processing image');
