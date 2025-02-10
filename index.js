@@ -22,21 +22,20 @@ fastify.get('/image', async (req, res) => {
   }
 
   try {
-    let response = await fetch(imagePath);
-    if (!response.ok) {
-      throw new Error(`Image download failed with status: ${response.status}`);
-    }
+    let imageBuffer = await fetch(imagePath).then(async (res) => {
+      if (!res.ok) {
+        throw new Error(`Image download failed with status: ${res.status}`);
+      }
+      const temp = await res.arrayBuffer();
 
-    let arrayBuffer = await response.arrayBuffer();
-    let imageBuffer = Buffer.from(arrayBuffer);
+      return Buffer.from(temp)
+    });
 
     let processedImage = await sharp(imageBuffer)
       .resize(Number(width))
       .toFormat(imageFormat.split('/')[1], { quality: Number(quality) })
       .toBuffer();
 
-    response = null;
-    arrayBuffer = null;
     imageBuffer = null;
     
     sharp.cache(false);
